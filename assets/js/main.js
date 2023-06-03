@@ -59,6 +59,140 @@ function scrollTop(){
 }
 window.addEventListener('scroll', scrollTop)
 
+/*==================== ITEM TYPE =======================*/
+const btnEl = document.querySelectorAll(".button");
+const type_cont = document.querySelector(".type");
+const Indian_cont = document.querySelector(".Indian");
+const European_cont = document.querySelector(".European");
+const South_African_cont = document.querySelector(".South_African");
+const Appetizers_cont = document.querySelector(".Appetizers");
+const Desserts_cont = document.querySelector(".Desserts");
+const Beverages_cont = document.querySelector(".Beverages");
+const total_cont = document.querySelector(".total_menu");
+const close_icon_cont = document.querySelector(".close");
+close_icon_cont.addEventListener('click',()=>{
+    console.log('hello');
+    total_cont.style.display="none";
+    type_cont.style.display="grid";
+    Indian_cont.style.display="none";
+    European_cont.style.display="none";
+    South_African_cont.style.display="none";
+    Appetizers_cont.style.display="none";
+    Desserts_cont.style.display="none";
+    Beverages_cont.style.display="none";
+})
+btnEl.forEach(element=>element.addEventListener('click',()=>{
+    if(element.innerText=="Indian"){
+        total_cont.style.display="flex";
+        Indian_cont.style.display="grid";
+        type_cont.style.display="none";
+    }else if(element.innerText=="European"){
+        total_cont.style.display="flex";
+        European_cont.style.display="grid";
+        type_cont.style.display="none";
+    }else if(element.innerText=="South African"){
+        total_cont.style.display="flex";
+        South_African_cont.style.display="grid";
+        type_cont.style.display="none";
+    }else if(element.innerText=="Appetizers"){
+        total_cont.style.display="flex";
+        Appetizers_cont.style.display="grid";
+        type_cont.style.display="none";
+    }else if(element.innerText=="Desserts"){
+        total_cont.style.display="flex";
+        Desserts_cont.style.display="grid";
+        type_cont.style.display="none";
+    }else if(element.innerText=="Beverages"){
+        total_cont.style.display="flex";
+        Beverages_cont.style.display="grid";
+        type_cont.style.display="none";
+    }
+   
+    
+}))
+/*====================ADD TO CART=====================*/
+const menu_cont=document.querySelectorAll(".menu__content");
+const item_name=[]
+menu_cont.forEach(element=>element.addEventListener('click',(event)=>{
+    event.preventDefault();
+    element.classList.add("icon_after_click");
+    item_name.push(element.querySelector(".menu__name").innerText);
+    
+})
+);
+/*=================place Order=================*/
+const place_btn=document.querySelectorAll(".order_button");
+const del_form=document.querySelector(".delivery_form");
+place_btn.forEach(element=>element.addEventListener('click',()=>{
+    del_form.style.display="flex";
+    total_cont.style.display="none";
+    Indian_cont.style.display="none";
+    European_cont.style.display="none";
+    South_African_cont.style.display="none";
+    Appetizers_cont.style.display="none";
+    Desserts_cont.style.display="none";
+    Beverages_cont.style.display="none";
+    console.log(item_name)
+}))
+/*==============form data============*/
+const fromEl=document.querySelector(".deliver_form");
+var nameUser;
+var number;
+var addres;
+fromEl.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    nameUser= fromEl.querySelector("#name").value;
+    number=fromEl.querySelector("#no").value;
+    addres=fromEl.querySelector("#address").value;
+    total_cont.style.display="none";
+    type_cont.style.display="grid";
+    Indian_cont.style.display="none";
+    European_cont.style.display="none";
+    South_African_cont.style.display="none";
+    Appetizers_cont.style.display="none";
+    Desserts_cont.style.display="none";
+    Beverages_cont.style.display="none";
+    del_form.style.display="none";
+})
+/*===============admin=============*/
+var userId="kp";
+var password="1234";
+const admin_fromEl=document.querySelector(".login_form");
+const form_cont=document.querySelector(".login_form_cont");
+const admin_btn=document.querySelector(".admin");
+const order_container=document.querySelector(".orders_container");
+const itemEl=document.querySelector("#items");
+const nameEl=document.querySelector("#c_name");
+const numberEl=document.querySelector("#c_number");
+const addressEl=document.querySelector("#c_address");
+const sectionEl1=document.querySelector(".menu");
+const sectionEl2=document.querySelector(".contact");
+const sectionEl3=document.querySelector(".footer");
+admin_btn.addEventListener('click',()=>{
+    form_cont.style.display="flex";
+    type_cont.style.display="none";
+    sectionEl1.style.height="200px";
+    sectionEl2.style.display="none";
+    sectionEl3.style.display="none";
+})
+console.log(admin_fromEl);
+admin_fromEl.addEventListener('submit',(e)=>{
+e.preventDefault();
+console.log("hello");
+if(admin_fromEl.querySelector("#userId").value==userId && admin_fromEl.querySelector("#password")){
+console.log("ok");
+admin_fromEl.style.display="none";
+order_container.style.display="flex";
+item_name.forEach(element=>{
+    const list=document.createElement("li");
+    list.innerText=`${element}`;
+    itemEl.appendChild(list);
+})
+nameEl.innerText=`Name:${nameUser}`;
+numberEl.innerText=`Number:${number}`;
+addressEl.innerText=`Address:${addres}`;
+          }
+})
 /*==================== DARK LIGHT THEME ====================*/ 
 const themeButton = document.getElementById('theme-button')
 const darkTheme = 'dark-theme'
@@ -99,9 +233,9 @@ const sr = ScrollReveal({
 
 sr.reveal(`.home__data, .home__img,
             .about__data, .about__img,
-            .services__content, .menu__content,
+            .services__content,
             .app__data, .app__img,
             .contact__data, .contact__button,
-            .footer__content`, {
+            .footer__content, .type`, {
     interval: 200
 })
